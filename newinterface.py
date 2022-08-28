@@ -20,7 +20,7 @@ class Ui_SecondWindow(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(70, 30, 231, 201))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("C:/Users/roman/Downloads/ftp_image.png"))
+        self.label.setPixmap(QtGui.QPixmap("ftp_image.png"))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(50, 340, 241, 121))
