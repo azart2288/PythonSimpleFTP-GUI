@@ -47,6 +47,7 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
 
     def savefile(self):
         filename = (self.serverlist.currentItem().text())
+        filepath = os.path.join(self.directory, filename)
 
 
 
@@ -55,10 +56,19 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         #file.append(names)
         #files=''.join(map(str,file))
 
-        with open(filename, 'wb') as f:
+        #path = []
+        #path.append(self.directory)
+        #print(path)
+
+        with open(filepath , 'wb') as f:
             self.ftp.retrbinary('RETR ' + filename, f.write)
+            self.locallist.addItem(filename)
 
         self.locallist.repaint()
+
+
+
+
 
 
 
@@ -98,11 +108,30 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
 
     def browsefolder(self):
         self.locallist.clear()
-        directory = QtWidgets.QFileDialog.getExistingDirectory(self , "open folder" , 'F://' ,  QtWidgets.QFileDialog.ShowDirsOnly)
+        self.directory = QtWidgets.QFileDialog.getExistingDirectory(self , "open folder" , 'F://' ,  QtWidgets.QFileDialog.ShowDirsOnly)
+        
 
-        if directory:
-            for file_name in os.listdir(directory):
+        if self.directory:
+            for file_name in os.listdir(self.directory):
+
                 self.locallist.addItem(file_name)
+
+                #print(currectfiles_list)
+
+
+        #n = 10
+        #currect_files = []
+        #currect_files.append(self.directory)
+        #for i in range(1 , n):
+            #i = os.listdir(self.directory)
+            #if i:
+
+                #f = ''.join(map(str,i))
+                #self.locallist.addItem(f)
+
+
+
+
 
 
 
