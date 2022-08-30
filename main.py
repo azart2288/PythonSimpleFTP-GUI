@@ -8,6 +8,7 @@ from PyQt5.QtGui import QPixmap
 import newinterface
 from ftplib import FTP
 from os import path
+import options
 
 Ftp_url = []
 
@@ -25,10 +26,31 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         #ftp = FTP()
         self.reloadbutton.clicked.connect(self.reload)
         self.save_button.clicked.connect(self.savefile)
+        self.option_button.clicked.connect(self.options)
+        self.back_button.clicked.connect(self.backdir)
+        self.home_button.clicked.connect(self.homedir)
 
 
         #self.serverlist.itemSelectionChanged.connect(self.savefile)
         self.serverlist.itemDoubleClicked.connect(self.changedir)
+
+    
+
+
+    def homedir(self):
+        default_home = "/"
+        self.ftp.cwd(default_home)
+        self.serverlist.clear()
+        self.files.clear()
+        self.ftp.retrlines("NLST" , self.files.append)
+
+        for filenames in self.files:
+            self.stringfiles=''.join(map(str,filenames))
+            self.serverlist.addItem(self.stringfiles)
+
+    def options(self):
+        self.op1 = Options()
+        self.op1.show()
 
     def changedir(self):
         doublefilename = (self.serverlist.currentItem().text())
@@ -43,6 +65,23 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         for filenames in self.files:
             self.stringfiles=''.join(map(str,filenames))
             self.serverlist.addItem(self.stringfiles)
+
+    def backdir(self):
+        self.serverlist.clear()
+        self.ftp_path = (f"{self.ftp.pwd()}")
+        ftp_path = ('/'.join(self.ftp_path.split('/')[:-1]))
+        self.ftp.cwd(ftp_path)
+        self.files.clear()
+        self.ftp.retrlines("NLST" , self.files.append)
+
+        for filenames in self.files:
+            self.stringfiles=''.join(map(str,filenames))
+            self.serverlist.addItem(self.stringfiles)
+
+
+
+        #for ftpbacks in ftp_path:
+
         
 
     def savefile(self):
@@ -175,6 +214,17 @@ class Form(QtWidgets.QMainWindow, form.Ui_MainWindow, interface.Ui_MainWindow):
         #self.ex1.serverlist.repaint()
 
         self.close()
+
+
+class Options(QtWidgets.QMainWindow, options.Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.Ru_lang.toggled.connect(self.russian)
+
+    def russian(self):
+        print("sus")
+
 
         
 
