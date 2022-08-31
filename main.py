@@ -29,12 +29,30 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         self.option_button.clicked.connect(self.options)
         self.back_button.clicked.connect(self.backdir)
         self.home_button.clicked.connect(self.homedir)
+        self.next_button.clicked.connect(self.nextdir)
 
 
         #self.serverlist.itemSelectionChanged.connect(self.savefile)
         self.serverlist.itemDoubleClicked.connect(self.changedir)
 
     
+
+    def nextdir(self):
+        self.serverlist.clear()
+        self.ftp.cwd(self.ftp_path)
+        self.files.clear()
+        self.ftp.retrlines("NLST" , self.files.append)
+
+        for filenames in self.files:
+            self.stringfiles=''.join(map(str,filenames))
+            self.serverlist.addItem(self.stringfiles)
+
+        
+
+
+
+
+
 
 
     def homedir(self):
