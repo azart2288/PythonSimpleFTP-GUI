@@ -44,8 +44,12 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
 
     
     def upload(self):
-        self.select = (self.locallist.currentItem().text())
-        self.full_select = (self.directory + "/" + self.select)
+        try:
+            
+            self.select = (self.locallist.currentItem().text())
+            self.full_select = (self.directory + "/" + self.select)
+        except:
+            pass
 
         try:
 
