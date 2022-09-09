@@ -25,7 +25,6 @@ class Ui_MainWindow(object):
         self.cancel_button.setObjectName("cancel_button")
         self.ftp_edit = QtWidgets.QLineEdit(self.centralwidget)
         self.ftp_edit.setGeometry(QtCore.QRect(30, 21, 201, 31))
-        self.ftp_edit.setText("")
         self.ftp_edit.setObjectName("ftp_edit")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -42,8 +41,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.connect_button.setText(_translate("MainWindow", "Connect!"))
-        self.cancel_button.setText(_translate("MainWindow", "Cancel"))
+        self.connect_button.setText(_translate("MainWindow", "Подключение"))
+        self.cancel_button.setText(_translate("MainWindow", "Отмена"))
+        self.ftp_edit.setText(_translate("MainWindow", "ftp."))
 
 
 if __name__ == "__main__":

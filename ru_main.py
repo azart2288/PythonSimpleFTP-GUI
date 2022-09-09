@@ -1,34 +1,30 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-import form 
-import interface
 import sys
 import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QGridLayout, QWidget  ,QListWidget, QListWidgetItem, QAbstractItemView
 from PyQt5.QtGui import QPixmap
-import newinterface
 from ftplib import FTP
 from os import path
-import options
 import ru_options
 import ru_form
 import ru_interface
 import ru_newinterface
 import ru_interface
-from form_main import Form
+from form_main import Ru_Form
 
-#Ftp_url = []
-
-
+Ftp_url = []
 
 
-class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
+
+
+class ExampleApp_RU(QtWidgets.QMainWindow, ru_interface.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         self.openfolder_button.clicked.connect(self.browsefolder)
         self.about_button.clicked.connect(self.showdialog)
         self.ftpbutton.clicked.connect(self.showftp)
-        self.f1 = Form()
+        #self.f1 = Form()
         #ftp = FTP()
         self.reloadbutton.clicked.connect(self.reload)
         self.save_button.clicked.connect(self.savefile)
@@ -36,29 +32,12 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
         self.back_button.clicked.connect(self.backdir)
         self.home_button.clicked.connect(self.homedir)
         self.next_button.clicked.connect(self.nextdir)
-        self.upload_button.clicked.connect(self.upload)
 
 
         #self.serverlist.itemSelectionChanged.connect(self.savefile)
         self.serverlist.itemDoubleClicked.connect(self.changedir)
 
     
-    def upload(self):
-        self.select = (self.locallist.currentItem().text())
-        self.full_select = (self.directory + "/" + self.select)
-
-        try:
-
-            with open(self.full_select , "rb") as up_file:
-                self.ftp.storbinary('STOR %s' % self.select, up_file)
-        except:
-            pass
-
-
-
-
-
-
 
     def nextdir(self):
         self.serverlist.clear()
@@ -86,9 +65,8 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
             self.serverlist.addItem(self.stringfiles)
 
     def options(self):
-        from options_main import Options , Ru_options
-        self.op1 = Options()
-        #print(self.op1.toggled())
+        from options_main import Ru_options
+        self.op1 = Ru_options()
         self.op1.show()
 
     def changedir(self):
@@ -134,19 +112,15 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
 
 
     def reload(self):
+        self.serverlist.clear()
         try:
-            self.serverlist.clear()
-            self.f1 = Form()
-            #self.Ftp_url = Ftp_url()
-            self.ftp_url=''.join(map(str, self.f1.list()))
+            self.ftp_url=''.join(map(str, Ftp_url))
             self.ftp = FTP(self.ftp_url)
             self.ftp.login()
             self.files = []
             self.ftp.retrlines("NLST",self.files.append)
-            #self.ftp.close()
         except:
             pass
-
 
         try:
             for filenames in self.files:
@@ -165,20 +139,19 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
 
                 self.locallist.addItem(file_name)
 
-
     def showdialog(self):
         self.d1 = Dialog()
         self.d1.show()
 
     def showftp(self):
-        self.f1 = Form()
+        self.f1 = Ru_Form()
         self.f1.show()
 
 
 
 
 
-class Dialog(QtWidgets.QMainWindow, newinterface.Ui_SecondWindow):
+class Dialog(QtWidgets.QMainWindow, ru_newinterface.Ui_SecondWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -190,11 +163,5 @@ class Dialog(QtWidgets.QMainWindow, newinterface.Ui_SecondWindow):
 
 
 
-def main():
-    app = QtWidgets.QApplication(sys.argv)
-    window = ExampleApp()
-    window.show()
-    sys.exit(app.exec_())
 
-if __name__ == "__main__":
-    main()
+

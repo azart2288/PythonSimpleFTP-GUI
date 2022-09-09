@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.reloadbutton = QtWidgets.QPushButton(self.centralwidget)
         self.reloadbutton.setLayoutDirection(QtCore.Qt.LeftToRight)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("imgs/strelka.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("GuiFTP/strelka.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.reloadbutton.setIcon(icon)
         self.reloadbutton.setObjectName("reloadbutton")
         self.horizontalLayout.addWidget(self.reloadbutton)
@@ -80,9 +80,6 @@ class Ui_MainWindow(object):
         self.back_button.setIcon(icon5)
         self.back_button.setObjectName("back_button")
         self.gridLayout.addWidget(self.back_button, 2, 4, 2, 1)
-        self.upload_button = QtWidgets.QPushButton(self.centralwidget)
-        self.upload_button.setObjectName("upload_button")
-        self.gridLayout.addWidget(self.upload_button, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 805, 26))
@@ -98,13 +95,12 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.about_button.setText(_translate("MainWindow", "About"))
-        self.option_button.setText(_translate("MainWindow", "Options"))
-        self.reloadbutton.setText(_translate("MainWindow", "reload"))
-        self.save_button.setText(_translate("MainWindow", "savefile"))
-        self.ftpbutton.setText(_translate("MainWindow", "ftp-connect"))
-        self.openfolder_button.setText(_translate("MainWindow", "open folder"))
-        self.upload_button.setText(_translate("MainWindow", "UploadFile"))
+        self.about_button.setText(_translate("MainWindow", "Про нас"))
+        self.option_button.setText(_translate("MainWindow", "Настройки"))
+        self.reloadbutton.setText(_translate("MainWindow", "Обновить"))
+        self.save_button.setText(_translate("MainWindow", "Сохранить файл"))
+        self.ftpbutton.setText(_translate("MainWindow", "Соединить"))
+        self.openfolder_button.setText(_translate("MainWindow", "Открыть папку"))
 
 
 if __name__ == "__main__":

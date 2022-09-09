@@ -40,9 +40,9 @@ class Ui_SecondWindow(object):
     def retranslateUi(self, SecondWindow):
         _translate = QtCore.QCoreApplication.translate
         SecondWindow.setWindowTitle(_translate("SecondWindow", "MainWindow"))
-        self.label_2.setText(_translate("SecondWindow", "PythonSimpleFTP by Azart2888(2022)\n"
+        self.label_2.setText(_translate("SecondWindow", "PythonSimpleFTP от Azart2888(2022)\n"
 "\n"
-"Special thanks for Ansel\n"
+"Большое спасибо Ansel\n"
 "\n"
 "github.com/azart2288/PythonSimpleFTP-"))
 
