@@ -1,6 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import form
 import ru_form
+import info_main
+from info_main import Info
 Ftp_url = []
 
 
@@ -20,6 +22,8 @@ class Form(QtWidgets.QMainWindow, form.Ui_MainWindow ):
 
     def ftpconnect(self):
         #self.ex1 = ExampleApp()
+        self.i1 = Info()
+        self.i1.show()
         Ftp_url.clear()
         self.x = self.ftp_edit.text()
         #self.Ftp_url = Ftp_url()
@@ -27,6 +31,7 @@ class Form(QtWidgets.QMainWindow, form.Ui_MainWindow ):
         Ftp_url.append(self.x)
 
         self.close()
+
 
 
 class Ru_Form(QtWidgets.QMainWindow, ru_form.Ui_MainWindow):
