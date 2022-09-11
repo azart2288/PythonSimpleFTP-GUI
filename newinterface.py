@@ -44,7 +44,9 @@ class Ui_SecondWindow(object):
 "\n"
 "Special thanks for Ansel\n"
 "\n"
-"github.com/azart2288/PythonSimpleFTP-"))
+"github.com/azart2288/PythonSimpleFTP-\n"
+"\n"
+"Beta 1.0"))
 
 
 if __name__ == "__main__":

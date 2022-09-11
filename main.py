@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QGridLayout, QWid
 from PyQt5.QtGui import QPixmap
 import newinterface
 from ftplib import FTP
+from ftplib import FTP_TLS
 from os import path
 import options
 import ru_options
@@ -14,8 +15,9 @@ import ru_form
 import ru_interface
 import ru_newinterface
 import ru_interface
-from form_main import Form
-
+from form_main import Form 
+from info_main import Info
+ 
 #Ftp_url = []
 
 
@@ -45,7 +47,6 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
     
     def upload(self):
         try:
-            
             self.select = (self.locallist.currentItem().text())
             self.full_select = (self.directory + "/" + self.select)
         except:
@@ -123,42 +124,6 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
             self.stringfiles=''.join(map(str,filenames))
             self.serverlist.addItem(self.stringfiles)
 
-
-
-
-    def savefile(self):
-        filename = (self.serverlist.currentItem().text())
-        filepath = os.path.join(self.directory, filename)
-
-        with open(filepath , 'wb') as f:
-            self.ftp.retrbinary('RETR ' + filename, f.write)
-            self.locallist.addItem(filename)
-
-        self.locallist.repaint()
-
-
-    def reload(self):
-        try:
-            self.serverlist.clear()
-            self.f1 = Form()
-            #self.Ftp_url = Ftp_url()
-            self.ftp_url=''.join(map(str, self.f1.list()))
-            self.ftp = FTP(self.ftp_url)
-            self.ftp.login()
-            self.files = []
-            self.ftp.retrlines("NLST",self.files.append)
-            #self.ftp.close()
-        except:
-            pass
-
-
-        try:
-            for filenames in self.files:
-                self.stringfiles=''.join(map(str,filenames))
-                self.serverlist.addItem(self.stringfiles)
-        except:
-            pass
-
     def browsefolder(self):
         self.locallist.clear()
         self.directory = QtWidgets.QFileDialog.getExistingDirectory(self , "open folder" , 'F://' ,  QtWidgets.QFileDialog.ShowDirsOnly)
@@ -168,6 +133,61 @@ class ExampleApp(QtWidgets.QMainWindow, interface.Ui_MainWindow):
             for file_name in os.listdir(self.directory):
 
                 self.locallist.addItem(file_name)
+
+
+
+
+    def savefile(self):
+        filename = (self.serverlist.currentItem().text())
+
+        try:
+            filepath = os.path.join(self.directory, filename)
+
+            with open(filepath , 'wb') as f:
+                self.ftp.retrbinary('RETR ' + filename, f.write)
+                self.locallist.addItem(filename)
+
+                self.locallist.repaint()
+        except AttributeError:
+            with open(filename , 'wb') as f:
+                self.ftp.retrbinary('RETR ' + filename, f.write)
+                self.locallist.addItem(filename)
+
+                self.locallist.repaint()
+
+
+
+
+    def reload(self):
+        try:
+            self.serverlist.clear()
+            self.f1 = Form()
+            self.i1 = Info()
+            #self.Ftp_url = Ftp_url()
+            self.ftp_url=''.join(map(str, self.f1.list()))
+            self.ftp_port =''.join(map(str, self.i1.port()))
+            self.int_ftp_port = int(self.ftp_port)
+            self.ftp_user =''.join(map(str, self.i1.user()))
+            self.ftp_password =''.join(map(str, self.i1.password()))
+            #print(self.ftp_port)
+            self.ftp = FTP()
+            #self.ftps = FTP_TLS()
+            self.ftp.connect(self.ftp_url, self.int_ftp_port)
+            self.ftp.login(self.ftp_user , self.ftp_password)
+            self.files = []
+            self.ftp.retrlines("NLST",self.files.append)
+        except:
+            pass
+        #self.ftp.close()
+
+
+        try:
+            for filenames in self.files:
+                self.stringfiles=''.join(map(str,filenames))
+                self.serverlist.addItem(self.stringfiles)
+        except:
+            pass
+
 
 
     def showdialog(self):
